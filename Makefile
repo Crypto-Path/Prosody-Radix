@@ -1,7 +1,7 @@
 # Compiler and Flags
 CC = emcc
-CFLAGS = -s USE_GLFW=3 -s WASM=1
-INCLUDE = -I$(PWD)/raylib/src
+CFLAGS = -s USE_GLFW=3 -s WASM=1 -s ASYNCIFY
+INCLUDE = -I$(PWD)/raylib/src -I$(PWD)/clay
 LIBRARY = -L$(PWD)/raylib/src -lraylib.web
 OUTPUT = index.html
 

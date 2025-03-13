@@ -1,1 +1,12 @@
 raylib/
+index.html
+index.js
+index.wasm
+index.data
+index.wasm.map
+index.worker.js
+dist/
+build/
+*.o
+*.a
+*.wasm.map

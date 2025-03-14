@@ -1,26 +1,44 @@
-#include <stdio.h>
-#include "raylib.h"
+#define CLAY_IMPLEMENTATION
+#include "clay/clay.h"
+#include "clay/renderers/raylib/clay_renderer_raylib.c"
 
 int main(void) {
-    // Initialize Raylib
-    InitWindow(800, 600, "Simple Raylib Window");
-    SetTargetFPS(60); // Set FPS to 60
+	Clay_Raylib_Initialize(800, 600, "Prosody", FLAG_WINDOW_RESIZABLE);
 
-    // Main game loop
-    while (!WindowShouldClose()) {
-        // Begin drawing
-        BeginDrawing();
-        ClearBackground(RAYWHITE); // Set background color to white
+	uint64_t clayRequireMemory = Clay_MinMemorySize();
+	Clay_Arena clayMemory = (Clay_Arena) {
+		.memory = malloc(clayRequireMemory),
+		.capacity = clayRequireMemory
+	};
+	Clay_Initialize(clayMemory, (Clay_Dimensions) {
+		.width = GetScreenWidth(),
+		.height = GetScreenHeighr()
+	});
+	
+	while (!WindowShouldClose()) {
+		Clay_BeginLayout();
+		
+		CLAY(
+			CLAY_RECTANGLE({
+				.color = { 89, 85, 96, 255 }
+			}),
+			CLAY_LAYOUT({
+				.sizing = {
+					.width = CLAY_SIZING_GROW(),
+					.height = CLAY_SIZING_GROW()
+				}
+			})
+		) {
+			
+		}
+		
+		Clay_RenderCommandArray renderCommands = Clay_EndLayout();
+		
+		BeginDrawing();
+		ClearBackground(BLACK);
+		Clay_Raylib_Render(renderCommands);
+		EndDrawing();
+	}
 
-        // Draw text in the center of the screen
-        DrawText("Hello, Raylib!", 350, 275, 20, DARKGRAY);
-
-        // End drawing
-        EndDrawing();
-    }
-
-    // Close window and OpenGL context
-    CloseWindow();
-
-    return 0;
+	return 0;
 }

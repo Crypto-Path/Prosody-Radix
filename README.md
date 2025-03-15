@@ -8,19 +8,16 @@ Prosody-X:
  - Prosody: Used a canvas element and js 											| Focused on the editor, is like "stable" version
  - Prosody Radix: uses WASM, radix also means root in latin 	| Rebuilt for best performance and future proofing, is like "lazer" version
 
-## Compile Command
+## Commands
 
+### Compile
 ```sh
 make clean && make
 ```
-Deletes compiled files and recompiles the web build
+> Deletes compiled files and recompiles the web build
 
-or
-
+### Host Client
 ```sh
-emcc main.c -o index.html -s USE_GLFW=3 -s WASM=1 \
-	-I /storage/emulated/0/Prosody-Radix/raylib/src \
-	 -L /storage/emulated/0/Prosody-Radix/raylib/src \
-	 -lraylib.web -s ERROR_ON_UNDEFINED_SYMBOLS=0
+emrun --no_browser --port 8080 --hostname 0.0.0.0 ./
 ```
-Compiles the web build
+> Hosts the compiled html file to local host
